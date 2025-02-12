@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+#my-locker {
+    border: 10px solid #bf3539;
+    box-shadow: 0px 1px 22px rgba(41, 41, 41, 0.56) !important;
+    font-family: 'Source Sans Pro', sans-serif;
+    position: relative;
+}
+
+#my-locker-top span {
+    font-size: 21px !important;
+}
+
+body.mobile #my-locker-top span {
+    font-size: 21px !important;
+}
+
+#my-locker-top img {
+    height: 200px;
+    margin-bottom: 7px;
+}
+
+body.mobile #my-locker-top img {
+    height: 110px;
+    max-width: 395px;
+}
+
+#my-locker-top hr {
+    background: #dedede;
+    border: 0;
+    height: 2px;
+    margin: 17px 0 0;
+}
+
+.loading-button {
+    background: #bf3539;
+    color: #f7fdf8;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 14px 0;
+}
+
+.loading-botton i {
+    color: #e8d04a;
+}
+
+body.mobile .loading-button {
+    font-size: 12px;
+}
+
+#my-locker-body-offers-list a {
+    border-bottom-width: 3px !important;
+}
+
+
+/* DIFFICULTIES */
+
+.difficulty {
+    background: red;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 2px 5px 2px;
+    margin: 0 0 -2px 12px;
+}
+
+.difficulty.easy {
+    background: #41c101;
+}
+
+.difficulty.medium {
+    background: #ce8c14;
+}
+
+.difficulty.hard {
+    background: #d60000;
+}
