@@ -5,53 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FundedNext Offer</title>
   <style>
+    /* Basic page styling */
     body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f4f4f4;
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
     }
     .container {
-      background: white;
-      border-radius: 15px;
+      max-width: 600px;
+      margin: 40px auto;
       padding: 20px;
       text-align: center;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      border: 5px solid #7D5DF8;
+      background: #fff;
+      border-radius: 8px;
+      /* Added purple neon glow along with a subtle standard shadow */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(128, 0, 128, 0.6);
     }
     .logo img {
-      width: 150px;
+      max-width: 150px;
+      margin-bottom: 20px;
     }
     .description {
-      margin: 15px 0;
-      font-size: 16px;
+      font-size: 1.2em;
+      margin-bottom: 20px;
     }
+    
+    /* Styles for warning and success messages */
+    .warning-message {
+      color: #dc3545;
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 15px 0;
+      display: none;
+    }
+    .warning-message::before {
+      content: "⚠️ ";
+    }
+    .success-message {
+      color: #155724;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 15px 0;
+      display: none;
+    }
+    .success-message::before {
+      content: "✅ ";
+    }
+    
+    /* Task buttons styling: black boxes with white text, arranged vertically */
     .task-button {
       display: block;
-      background: black;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      margin: 10px 0;
+      width: 100%;
+      padding: 12px; /* Slightly smaller padding */
+      margin-bottom: 10px;
       text-decoration: none;
-      font-size: 16px;
-      cursor: pointer;
+      color: #fff;
+      background-color: #000;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      text-align: center;
+      box-sizing: border-box; /* Ensure padding doesn't cause overflow */
     }
     .task-button:hover {
-      background: #333;
+      background-color: #333;
     }
+    
+    /* Task status button styling */
     .task-status {
       display: inline-block;
-      background: #7D5DF8;
-      color: white;
+      margin: 10px;
       padding: 10px 20px;
-      border-radius: 8px;
-      font-weight: bold;
       text-decoration: none;
-      margin-top: 15px;
+      color: #fff;
+      background-color: #007bff;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .task-status:hover {
+      background-color: #0056b3;
+    }
+    
+    .footer-text {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -60,15 +102,75 @@
     <div class="logo">
       <img src="https://i.ibb.co/m5y0txZD/Black-and-Blue-Initials-Creative-Logo-1.png" alt="FundedNext Logo">
     </div>
-    <p class="description">Want a <b>10k funded account</b> from <b>FundedNext</b>? Complete one of the tasks below to claim yours!</p>
+    <p class="description">
+      Want a <b>10k funded account</b> from <b>FundedNext</b>? Complete one of the tasks below to claim yours!
+    </p>
     
-    <a href="https://smrturl.co/d2ce3e8" class="task-button">Exclusive Travel Deals – Grab Yours Now!</a>
-    <a href="https://smrturl.co/d2ce3e8" class="task-button">Limited Amazon Reward – Claim $1000 Today!</a>
-    <a href="https://smrturl.co/d2ce3e8" class="task-button">Premium Beauty Products – Get Yours Instantly!</a>
-    <a href="https://smrturl.co/d2ce3e8" class="task-button">Surprise Gift Awaits – Unlock Your Reward!</a>
+    <div class="warning-message" id="warningMessage">
+      You need to complete at least one task!
+    </div>
+    <div class="success-message" id="successMessage">
+      Task complete! You'll get your funded account in a few hours!
+    </div>
     
-    <a href="complete.html" class="task-status">Task Complete</a>
-    <p>Complete <b>1</b> task to win a <b>10k funded</b> account.</p>
+    <!-- Task buttons styled as black boxes with white text -->
+    <a href="https://smrturl.co/d2ce3e8" class="task-button" target="_blank" rel="noopener noreferrer">
+      Exclusive Travel Deals – Grab Yours Now!
+    </a>
+    <a href="https://smrturl.co/d2ce3e8" class="task-button" target="_blank" rel="noopener noreferrer">
+      Limited Amazon Reward – Claim $1000 Today!
+    </a>
+    <a href="https://smrturl.co/d2ce3e8" class="task-button" target="_blank" rel="noopener noreferrer">
+      Premium Beauty Products – Get Yours Instantly!
+    </a>
+    <a href="https://smrturl.co/d2ce3e8" class="task-button" target="_blank" rel="noopener noreferrer">
+      Surprise Gift Awaits – Unlock Your Reward!
+    </a>
+    
+    <!-- Task status button -->
+    <a href="#" class="task-status" id="completeButton">Task Complete</a>
+    <p class="footer-text">
+      Complete <b>1</b> task to win a <b>10k funded</b> account.
+    </p>
   </div>
+  
+  <script>
+    let taskCompleted = false;
+    
+    // Track task button clicks
+    document.querySelectorAll('.task-button').forEach(button => {
+      button.addEventListener('click', function(e) {
+        if (confirm('You will be redirected to the task page. Continue?')) {
+          taskCompleted = true;
+        } else {
+          e.preventDefault();
+        }
+      });
+    });
+    
+    // Handle task status button click
+    document.getElementById('completeButton').addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      const warningMessage = document.getElementById('warningMessage');
+      const successMessage = document.getElementById('successMessage');
+      
+      if (taskCompleted) {
+        successMessage.style.display = 'block';
+        warningMessage.style.display = 'none';
+        // Redirect after 3 seconds
+        setTimeout(() => {
+          window.location.href = 'complete.html';
+        }, 3000);
+      } else {
+        warningMessage.style.display = 'block';
+        successMessage.style.display = 'none';
+        // Hide warning after 3 seconds
+        setTimeout(() => {
+          warningMessage.style.display = 'none';
+        }, 3000);
+      }
+    });
+  </script>
 </body>
 </html>
